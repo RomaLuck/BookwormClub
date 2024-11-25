@@ -1,0 +1,26 @@
+services:
+
+  nginx:
+    container_name: nginx
+    image: nginx:latest
+    ports:
+      - "8000:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./:/app
+    networks:
+      - my_network
+
+  php:
+    container_name: php
+    build:
+      context: ./
+    volumes:
+      - ./:/app
+    extra_hosts:
+      host.docker.internal: host-gateway
+    networks:
+      - my_network
+
+networks:
+  my_network:
