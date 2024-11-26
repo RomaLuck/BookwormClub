@@ -39,6 +39,7 @@ class Book
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
+        $this->setPublicationDate();
     }
 
 

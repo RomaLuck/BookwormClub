@@ -31,6 +31,11 @@ class Review
     #[ORM\ManyToOne(inversedBy: 'reviews')]
     private ?Book $book = null;
 
+    public function __construct()
+    {
+        $this->setPublicationDate();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
