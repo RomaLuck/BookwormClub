@@ -33,7 +33,7 @@ onMounted(() => {
         <td>{{ book.author }}</td>
         <td class="text-truncate">{{ book.description }}</td>
         <td class="d-flex justify-content-end">
-          <router-link :to="`/book/${book.id}`" class="btn btn-outline-info">Show</router-link>
+          <router-link :to="`/books/${book.id}`" class="btn btn-outline-info">Show</router-link>
         </td>
       </tr>
       </tbody>

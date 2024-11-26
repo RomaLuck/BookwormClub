@@ -4,26 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0cc0f1ba-d245-424a-833d-6fad3ec6c985" name="Changes" comment="add db test">
-      <change afterPath="$PROJECT_DIR$/assets/components/LayoutDiv.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/components/NavBar.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/components/books/BookList.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/components/books/BookShow.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/services/book.service.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/services/review.service.js" afterDir="false" />
+    <list default="true" id="0cc0f1ba-d245-424a-833d-6fad3ec6c985" name="Changes" comment="add auth, easyadmin">
       <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/App.vue" beforeDir="false" afterPath="$PROJECT_DIR$/assets/App.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/RegistrationControllerTest.php" beforeDir="false" afterPath="$PROJECT_DIR$/tests/RegistrationControllerTest.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -47,7 +30,8 @@
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/assets/app.js" root0="FORCE_HIGHLIGHTING" />
-    <setting file="file://$PROJECT_DIR$/compose.override.yaml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/config/packages/lexik_jwt_authentication.yaml" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/config/packages/security.yaml" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/package.json" root0="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/templates/base.html.twig" root0="FORCE_HIGHLIGHTING" root1="FORCE_HIGHLIGHTING" />
     <setting file="file://$PROJECT_DIR$/webpack.config.js" root0="FORCE_HIGHLIGHTING" />
@@ -216,7 +200,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "master",
-    "last_opened_file_path": "/home/roman/MyProjects/SymfonyVueUI/assets/services",
+    "last_opened_file_path": "/home/roman/MyProjects/SymfonyVueUI/templates",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -233,6 +217,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/templates" />
       <recent name="$PROJECT_DIR$/assets/services" />
       <recent name="$PROJECT_DIR$" />
     </key>
@@ -260,7 +245,7 @@
       <workItem from="1732564562331" duration="806000" />
       <workItem from="1732603217572" duration="26000" />
       <workItem from="1732603805746" duration="1410000" />
-      <workItem from="1732648535975" duration="8619000" />
+      <workItem from="1732648535975" duration="14309000" />
     </task>
     <task id="LOCAL-00001" summary="install vue">
       <option name="closed" value="true" />
@@ -278,7 +263,23 @@
       <option name="project" value="LOCAL" />
       <updated>1732621297350</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="add book list">
+      <option name="closed" value="true" />
+      <created>1732657292218</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1732657292218</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add auth, easyadmin">
+      <option name="closed" value="true" />
+      <created>1732662699946</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1732662699946</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -287,7 +288,9 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="install vue" />
     <MESSAGE value="add db test" />
-    <option name="LAST_COMMIT_MESSAGE" value="add db test" />
+    <MESSAGE value="add book list" />
+    <MESSAGE value="add auth, easyadmin" />
+    <option name="LAST_COMMIT_MESSAGE" value="add auth, easyadmin" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

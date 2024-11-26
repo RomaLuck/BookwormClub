@@ -11,7 +11,7 @@ const router = createRouter({
     history: createWebHistory(),
     routes: [
         {path: '/books', component: BookList},
-        {path: '/book/:id', component: () => BookShow},
+        {path: '/books/:id', component: () => BookShow},
     ],
 })
 
