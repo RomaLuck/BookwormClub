@@ -7,10 +7,11 @@
 
 // any CSS you import will output into a single css file (app.css in this case)
 import './styles/app.css';
+import * as bootstrap from 'bootstrap/dist/js/bootstrap.bundle';
 
 import { createApp } from 'vue';
 import App from "./App.vue";
 
 const app = createApp(App);
-
+app.provide('bootstrap', bootstrap);
 app.mount('#app');
