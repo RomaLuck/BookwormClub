@@ -1,10 +1,11 @@
 <script setup>
-import NavBar from "./components/NavBar.vue";
+
 </script>
 
 <template>
-  <NavBar/>
-  <RouterView/>
+  <div class="container my-5">
+    <slot></slot>
+  </div>
 </template>
 
 <style scoped>
