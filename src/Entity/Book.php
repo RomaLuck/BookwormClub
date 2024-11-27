@@ -43,6 +43,12 @@ class Book
     #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'book')]
     private Collection $reviews;
 
+    #[ORM\Column(type: Types::SMALLINT, nullable: true)]
+    private ?int $rating = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
@@ -136,6 +142,35 @@ class Book
                 $review->setBook(null);
             }
         }
+
+        return $this;
+    }
+
+    public function __toString(): string
+    {
+        return $this->title;
+    }
+
+    public function getRating(): ?int
+    {
+        return $this->rating;
+    }
+
+    public function setRating(?int $rating): static
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): static
+    {
+        $this->image = $image;
 
         return $this;
     }

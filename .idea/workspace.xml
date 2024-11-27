@@ -4,11 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0cc0f1ba-d245-424a-833d-6fad3ec6c985" name="Changes" comment="fix: add new review">
-      <change afterPath="$PROJECT_DIR$/assets/components/Main.vue" afterDir="false" />
+    <list default="true" id="0cc0f1ba-d245-424a-833d-6fad3ec6c985" name="Changes" comment="feat:add main vue component">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomeController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/Admin/ReviewCrudController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/Admin/ReviewCrudController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Book.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Book.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -264,7 +263,7 @@
       <workItem from="1732689539339" duration="4193000" />
       <workItem from="1732693760829" duration="195000" />
       <workItem from="1732693959767" duration="794000" />
-      <workItem from="1732740219542" duration="1519000" />
+      <workItem from="1732740219542" duration="2205000" />
     </task>
     <task id="LOCAL-00001" summary="install vue">
       <option name="closed" value="true" />
@@ -314,7 +313,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732703222253</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="feat:add main vue component">
+      <option name="closed" value="true" />
+      <created>1732741923861</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1732741923861</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -326,7 +333,8 @@
     <MESSAGE value="add book list" />
     <MESSAGE value="add auth, easyadmin" />
     <MESSAGE value="fix: add new review" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: add new review" />
+    <MESSAGE value="feat:add main vue component" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat:add main vue component" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
