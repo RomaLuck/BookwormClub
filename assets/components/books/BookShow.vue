@@ -12,11 +12,13 @@ const route = useRoute();
 const bookId = route.params.id;
 
 const addReview = async () => {
-  await ReviewService.create({
+  const newReview = {
     body: review.value,
     author: 'Anonymous',
     book: `/api/books/${bookId}`,
-  });
+  };
+  await ReviewService.create(newReview);
+  bookReviews.push(newReview);
   review.value = '';
 }
 
@@ -48,10 +50,9 @@ onMounted(async () => {
       {{book.description}}
     </textarea>
         <hr>
-
-      <textarea class="form-control" name="review" id="review" cols="30" rows="3" placeholder="Add review"
-                v-model="review"></textarea>
-          <button class="btn btn-primary" @click="addReview">Send</button>
+        <textarea class="form-control" name="review" id="review" cols="30" rows="3" placeholder="Add review"
+                  v-model="review"></textarea>
+        <button class="btn btn-primary" @click="addReview">Send</button>
       </div>
       <div class="col-md-3">
         <div class="card" style="width: 18rem;" v-for="bookReview in bookReviews" :key="bookReview.id">
