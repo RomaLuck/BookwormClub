@@ -22,16 +22,28 @@ RUN install-php-extensions \
     xsl \
     gd \
     intl \
-    @composer
+    @composer \
+    apcu
 
+#APCU
+RUN docker-php-ext-enable apcu
+RUN echo "extension=apcu.so" > /usr/local/etc/php/php.ini
+RUN echo "apc.enable_cli=1" > /usr/local/etc/php/php.ini
+RUN echo "apc.enable=1" > /usr/local/etc/php/php.ini
+#APCU
+
+#SYMFONY_CLI
 RUN wget https://get.symfony.com/cli/installer -O - | bash
 RUN mv /root/.symfony5/bin/symfony /usr/local/bin/symfony
+#SYMFONY_CLI
 
 WORKDIR /app
 
 RUN echo 'pm.max_children = 30' >> /usr/local/etc/php-fpm.d/zz-docker.conf
 
+#OPCACHE
 RUN docker-php-ext-configure opcache --enable-opcache \
-    && docker-php-ext-install opcache
+    && docker-php-ext-install opcache \
+#OPCACHE
 
 CMD ["php-fpm"]
