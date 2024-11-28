@@ -8,13 +8,7 @@ class BookService {
     }
 
     async create(book) {
-        const {title, author, description} = book;
-
-        return await axios.post("/api/books", {
-            title,
-            author,
-            description
-        }, {
+        return await axios.post("/api/books", book, {
             headers: {
                 "Content-Type": "application/ld+json"
             }

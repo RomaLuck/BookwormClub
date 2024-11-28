@@ -7,13 +7,7 @@ class ReviewService {
     }
 
     async create(review) {
-        const {body, author, book} = review;
-
-        return await axios.post("/api/reviews", {
-            body,
-            author,
-            book
-        }, {
+        return await axios.post("/api/reviews", review, {
             headers: {
                 "Content-Type": "application/ld+json"
             }
@@ -25,16 +19,17 @@ class ReviewService {
         return response.data;
     }
 
-    async edit() {
-        // Code here
+    async update(id, data) {
+        const response = await axios.patch(`/api/reviews/${id}`, data, {
+            headers: {
+                "Content-Type": "application/merge-patch+json"
+            }
+        });
+        return response.data;
     }
 
-    async update() {
-        // Code here
-    }
-
-    async delete() {
-        // Code here
+    async delete(id) {
+        await axios.delete(`/api/reviews/${id}`);
     }
 }
 

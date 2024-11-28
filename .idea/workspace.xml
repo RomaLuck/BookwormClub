@@ -4,38 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0cc0f1ba-d245-424a-833d-6fad3ec6c985" name="Changes" comment="feat:add image loader">
-      <change afterPath="$PROJECT_DIR$/assets/components/auth/Login.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/components/auth/Register.vue" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/router.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/services/security.service.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/store/userStore.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/packages/web_profiler.yaml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config/routes/web_profiler.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" afterPath="$PROJECT_DIR$/.env" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="0cc0f1ba-d245-424a-833d-6fad3ec6c985" name="Changes" comment="feat: add log in in vue">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/components/Main.vue" beforeDir="false" afterPath="$PROJECT_DIR$/assets/components/Main.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/components/NavBar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/assets/components/NavBar.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/components/books/BookList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/assets/components/books/BookList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/components/books/BookShow.vue" beforeDir="false" afterPath="$PROJECT_DIR$/assets/components/books/BookShow.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/router.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/assets/services/book.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/services/book.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/assets/styles/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/assets/styles/app.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/bundles.php" beforeDir="false" afterPath="$PROJECT_DIR$/config/bundles.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/api_platform.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/api_platform.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/lexik_jwt_authentication.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/lexik_jwt_authentication.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/security.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/security.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/routes.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/routes.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/HomeController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomeController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/RegistrationController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/RegistrationController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Controller/SecurityController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/SecurityController.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/services/review.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/services/review.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/services/security.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/services/security.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/store/userStore.js" beforeDir="false" afterPath="$PROJECT_DIR$/assets/store/userStore.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -397,7 +373,15 @@
       <option name="project" value="LOCAL" />
       <updated>1732746097178</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="feat: add log in in vue">
+      <option name="closed" value="true" />
+      <created>1732827789724</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1732827789724</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -413,7 +397,8 @@
     <MESSAGE value="feat:update book entity" />
     <MESSAGE value="feat:configure ReviewCrudController" />
     <MESSAGE value="feat:add image loader" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat:add image loader" />
+    <MESSAGE value="feat: add log in in vue" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add log in in vue" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
