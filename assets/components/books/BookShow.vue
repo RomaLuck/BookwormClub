@@ -12,6 +12,9 @@ const route = useRoute();
 const bookId = route.params.id;
 
 const addReview = async () => {
+  if (!review.value) {
+    return;
+  }
   const newReview = {
     body: review.value,
     author: 'Anonymous',
@@ -46,9 +49,7 @@ onMounted(async () => {
       <p>{{ book.author }}</p>
       <div class="col-md-9">
 
-        <textarea class="form-control" name="description" id="description" cols="30" rows="10" disabled>
-      {{book.description}}
-    </textarea>
+        <p v-html="book.description" class="border rounded p-2"></p>
         <hr>
         <textarea class="form-control" name="review" id="review" cols="30" rows="3" placeholder="Add review"
                   v-model="review"></textarea>
@@ -56,9 +57,10 @@ onMounted(async () => {
       </div>
       <div class="col-md-3">
         <div class="card" style="width: 18rem;" v-for="bookReview in bookReviews" :key="bookReview.id">
-          <div class="card-body">
+          <div class="card-body position-relative">
             <h5 class="card-title">{{ bookReview.author }}</h5>
             <p class="card-text">{{ bookReview.body }}</p>
+            <i class="bi bi-heart position-absolute bottom-0 end-0 m-2"></i>
           </div>
         </div>
       </div>

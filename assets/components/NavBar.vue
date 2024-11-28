@@ -4,10 +4,10 @@
 
 <template>
   <nav class="navbar bg-body-tertiary">
-    <div class="container">
-      <a class="navbar-brand" href="#">
-        <img src="" alt="Bootstrap" width="30" height="24">
-      </a>
+    <div class="container-md">
+      <router-link class="navbar-brand" to="/">
+        <i class="bi bi-houses"></i>
+      </router-link>
       <router-link to="/books" class="btn btn-primary">Books</router-link>
     </div>
   </nav>

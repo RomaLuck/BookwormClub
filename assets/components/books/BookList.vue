@@ -31,7 +31,7 @@ onMounted(() => {
       <tr v-for="book in books" :key="book.id">
         <td>{{ book.title }}</td>
         <td>{{ book.author }}</td>
-        <td class="text-truncate">{{ book.description }}</td>
+        <td class="text-truncate" v-html="book.description"></td>
         <td class="d-flex justify-content-end">
           <router-link :to="`/books/${book.id}`" class="btn btn-outline-info">Show</router-link>
         </td>
