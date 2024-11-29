@@ -2,11 +2,12 @@ import {defineStore} from 'pinia';
 
 export const useUserStore = defineStore('user', {
     state: () => ({
-        token: ''
+        token: localStorage.getItem('token') || '',
     }),
     actions: {
         setToken(newToken) {
             this.token = newToken;
+            localStorage.setItem('token', newToken);
         },
         setEmail(newEmail) {
             this.email = newEmail;
