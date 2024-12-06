@@ -4,7 +4,7 @@ import BookList from "./components/books/BookList.vue";
 import BookShow from "./components/books/BookShow.vue";
 import Login from "./components/auth/Login.vue";
 import Register from "./components/auth/Register.vue";
-import SecurityService from "./services/security.service";
+import {useUserStore} from "./store/userStore";
 
 const router = createRouter({
     history: createWebHistory(),
@@ -15,22 +15,22 @@ const router = createRouter({
         },
         {
             path: '/login',
-            component: () => Login
+            component: Login
         },
         {
             path: '/register',
-            component: () => Register
+            component: Register
         },
         {
             path: '/books',
-            component: () => BookList,
+            component: BookList,
             meta: {
                 requiresAuth: true
             }
         },
         {
             path: '/books/:id',
-            component: () => BookShow,
+            component: BookShow,
             meta: {
                 requiresAuth: true
             }
@@ -38,16 +38,15 @@ const router = createRouter({
     ],
 })
 
-router.beforeEach((to, from, next) => {
-    if (to.meta.requiresAuth) {
-        if (SecurityService.isAuthenticated()) {
-            next();
-        } else {
-            next('/login');
+router.beforeEach(async (to, from, next) => {
+    const userStore = useUserStore();
+    if (to.meta.requiresAuth && !userStore.isAuthenticated) {
+        await userStore.fetchUser();
+        if (!userStore.isAuthenticated) {
+            return next('/login');
         }
-    } else {
-        next();
     }
+    next();
 });
 
 export default router;

@@ -1,26 +1,24 @@
 <script setup>
 import LayoutDiv from "../LayoutDiv.vue";
 import {ref} from "vue";
-import SecurityService from "../../services/security.service";
 import router from "../../router";
+import {useUserStore} from "../../store/userStore";
 
 const email = ref('');
 const password = ref('');
 const error = ref('');
 
 const login = async () => {
+  const userStore = useUserStore();
   try {
-    await SecurityService.login({
-      username: email.value,
-      password: password.value
-    });
+    await userStore.login(email.value, password.value);
 
     email.value = '';
     password.value = '';
 
     await router.push('/');
   } catch (e) {
-    error.value = e.response.data.message || e.message;
+    error.value = e.response.data.message;
   }
 };
 

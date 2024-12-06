@@ -1,24 +1,63 @@
 import {defineStore} from 'pinia';
+import axios from "axios";
 
 export const useUserStore = defineStore('user', {
     state: () => ({
-        token: localStorage.getItem('token') || '',
+        user: null
     }),
+
     actions: {
-        setToken(newToken) {
-            this.token = newToken;
-            localStorage.setItem('token', newToken);
+        async login(email, password) {
+            const response = await axios.post('/api/login_check', {
+                'username': email,
+                'password': password
+            });
+
+            if (response.status !== 200) {
+                throw new Error('Invalid credentials');
+            }
+
+            const token = response.data.token;
+            if (!token) {
+                throw new Error('Invalid token');
+            }
+
+            await this.fetchUser();
         },
-        setEmail(newEmail) {
-            this.email = newEmail;
+
+        async register(email, username, password) {
+            const response = await axios.post('/api/register', {
+                email,
+                username,
+                password
+            });
+
+            if (response.status !== 201) {
+                throw new Error('Invalid credentials');
+            }
+
+            await this.fetchUser();
         },
-        clearToken() {
-            this.token = '';
+
+        async fetchUser() {
+            try {
+                const response = await axios.get('/api/user/');
+                if (response.status === 200) {
+                    this.user = await response.data;
+                }
+            } catch (e) {
+                this.user = null;
+            }
+        },
+
+        async logout() {
+            await axios.get('/logout')
+            this.user = null;
         }
+
     },
+
     getters: {
-        isAuthenticated: (state) => !!state.token,
-        getToken: (state) => state.token,
-        getEmail: (state) => state.email
+        isAuthenticated: (state) => !!state.user
     }
 });
