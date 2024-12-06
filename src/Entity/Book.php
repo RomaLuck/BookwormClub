@@ -2,9 +2,6 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Get;
-use ApiPlatform\Metadata\GetCollection;
 use App\Repository\BookRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -12,12 +9,6 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BookRepository::class)]
-#[ApiResource(
-    operations: [
-        new Get(),
-        new GetCollection()
-    ]
-)]
 class Book
 {
     #[ORM\Id]
@@ -40,7 +31,7 @@ class Book
     /**
      * @var Collection<int, Review>
      */
-    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'book')]
+    #[ORM\OneToMany(targetEntity: Review::class, mappedBy: 'book', cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $reviews;
 
     #[ORM\Column(type: Types::SMALLINT, nullable: true)]
@@ -136,12 +127,7 @@ class Book
 
     public function removeReview(Review $review): static
     {
-        if ($this->reviews->removeElement($review)) {
-            // set the owning side to null (unless already changed)
-            if ($review->getBook() === $this) {
-                $review->setBook(null);
-            }
-        }
+        $this->reviews->removeElement($review);
 
         return $this;
     }
@@ -173,5 +159,18 @@ class Book
         $this->image = $image;
 
         return $this;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'title' => $this->title,
+            'description' => $this->description,
+            'author' => $this->author,
+            'publicationDate' => $this->publicationDate,
+            'rating' => $this->rating,
+            'image' => $this->image,
+        ];
     }
 }
