@@ -32,7 +32,7 @@ class RegistrationController extends AbstractController
                 $errors = $validator->validate($user);
                 if (count($errors) > 0) {
                     return $this->json([
-                        'message' => 'Validation failed', 'errors' => (string) $errors
+                        'message' => 'Validation failed', 'errors' => $errors
                     ], Response::HTTP_BAD_REQUEST);
                 }
 

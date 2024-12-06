@@ -3,6 +3,7 @@ import LayoutDiv from "../LayoutDiv.vue";
 import {ref} from "vue";
 import router from "../../router";
 import {useUserStore} from "../../store/userStore";
+import Alert from "../Alert.vue";
 
 const email = ref('');
 const username = ref('');
@@ -20,7 +21,7 @@ const register = async () => {
 
     await router.push('/');
   } catch (e) {
-    error.value = e.response.data.message;
+    error.value = e.response.data.errors;
   }
 };
 
@@ -30,7 +31,7 @@ const register = async () => {
   <layout-div>
     <div class="row justify-content-center">
       <div class="col-md-6">
-        <div class="alert alert-danger" v-if="error">{{ error }}</div>
+        <Alert :alert="error"/>
         <div class="card">
           <div class="card-header">Login</div>
           <div class="card-body">

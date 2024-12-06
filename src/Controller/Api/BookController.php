@@ -42,7 +42,7 @@ final class BookController extends AbstractController
         $errors = $validator->validate($book);
         if (count($errors) > 0) {
             return $this->json([
-                'message' => 'Validation failed', 'errors' => (string)$errors
+                'message' => 'Validation failed', 'errors' => $errors
             ], Response::HTTP_BAD_REQUEST);
         }
 
@@ -74,7 +74,7 @@ final class BookController extends AbstractController
         $errors = $validator->validate($updatedBook);
         if (count($errors) > 0) {
             return $this->json([
-                'message' => 'Validation failed', 'errors' => (string)$errors
+                'message' => 'Validation failed', 'errors' => $errors
             ], Response::HTTP_BAD_REQUEST);
         }
 

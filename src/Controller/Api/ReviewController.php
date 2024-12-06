@@ -43,7 +43,7 @@ final class ReviewController extends AbstractController
         $errors = $validator->validate($review);
         if (count($errors) > 0) {
             return $this->json([
-                'message' => 'Validation failed', 'errors' => (string)$errors
+                'message' => 'Validation failed', 'errors' => $errors
             ], Response::HTTP_BAD_REQUEST);
         }
 
@@ -82,7 +82,7 @@ final class ReviewController extends AbstractController
         $errors = $validator->validate($updatedReview);
         if (count($errors) > 0) {
             return $this->json([
-                'message' => 'Validation failed', 'errors' => (string)$errors
+                'message' => 'Validation failed', 'errors' => $errors
             ], Response::HTTP_BAD_REQUEST);
         }
 

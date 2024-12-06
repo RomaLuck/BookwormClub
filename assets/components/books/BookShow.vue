@@ -5,6 +5,7 @@ import BookService from "../../services/book.service";
 import ReviewService from "../../services/review.service";
 import {useRoute} from "vue-router";
 import {useUserStore} from "../../store/userStore";
+import Alert from "../Alert.vue";
 
 const book = reactive({title: '', author: '', description: ''});
 const bookReviews = reactive([]);
@@ -30,7 +31,7 @@ const addReview = async () => {
     review.body = '';
     review.rating = 0;
   } catch (e) {
-    error.value = e.response.data.message;
+    error.value = e.response.data.errors;
   }
 }
 
@@ -58,7 +59,7 @@ onMounted(async () => {
 
         <p v-html="book.description" class="border rounded p-2"></p>
         <hr>
-        <div class="alert alert-danger" v-if="error">{{ error }}</div>
+        <Alert :alert="error"/>
         <div class="rating d-flex justify-content-end">
           <span v-for="star in 5" :key="star" :class="{'active': star <= review.rating}">
             <i class="bi bi-star" @click="rate(star)"></i>
