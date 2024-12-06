@@ -1,6 +1,6 @@
 <script setup>
 import LayoutDiv from "../LayoutDiv.vue";
-import {onMounted, reactive} from "vue";
+import {onMounted, reactive, ref} from "vue";
 import BookService from "../../services/book.service";
 import ReviewService from "../../services/review.service";
 import {useRoute} from "vue-router";
@@ -9,6 +9,7 @@ import {useUserStore} from "../../store/userStore";
 const book = reactive({title: '', author: '', description: ''});
 const bookReviews = reactive([]);
 const review = reactive({body: '', rating: 0});
+const error = ref('');
 const route = useRoute();
 const bookId = Number(route.params.id);
 const userStore = useUserStore();
@@ -23,10 +24,14 @@ const addReview = async () => {
     rating: review.rating,
     book: bookId,
   };
-  await ReviewService.create(newReview);
-  bookReviews.push(newReview);
-  review.body = '';
-  review.rating = 0;
+  try {
+    await ReviewService.create(newReview);
+    bookReviews.push(newReview);
+    review.body = '';
+    review.rating = 0;
+  } catch (e) {
+    error.value = e.response.data.message;
+  }
 }
 
 const rate = (star) => {
@@ -53,6 +58,7 @@ onMounted(async () => {
 
         <p v-html="book.description" class="border rounded p-2"></p>
         <hr>
+        <div class="alert alert-danger" v-if="error">{{ error }}</div>
         <div class="rating d-flex justify-content-end">
           <span v-for="star in 5" :key="star" :class="{'active': star <= review.rating}">
             <i class="bi bi-star" @click="rate(star)"></i>

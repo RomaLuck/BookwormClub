@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/api/books')]
 final class BookController extends AbstractController
@@ -28,10 +29,22 @@ final class BookController extends AbstractController
     }
 
     #[Route('/', name: 'app_book_new', methods: ['POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
+    public function new(
+        Request                $request,
+        EntityManagerInterface $entityManager,
+        SerializerInterface    $serializer,
+        ValidatorInterface     $validator
+    ): Response
     {
         $requestData = $request->getContent();
         $book = $serializer->deserialize($requestData, Book::class, 'json');
+
+        $errors = $validator->validate($book);
+        if (count($errors) > 0) {
+            return $this->json([
+                'message' => 'Validation failed', 'errors' => (string)$errors
+            ], Response::HTTP_BAD_REQUEST);
+        }
 
         $entityManager->persist($book);
         $entityManager->flush();
@@ -47,10 +60,23 @@ final class BookController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_book_edit', methods: ['PUT'])]
-    public function edit(Request $request, Book $book, EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
+    public function edit(
+        Request                $request,
+        Book                   $book,
+        EntityManagerInterface $entityManager,
+        SerializerInterface    $serializer,
+        ValidatorInterface     $validator
+    ): Response
     {
         $requestData = $request->getContent();
         $updatedBook = $serializer->deserialize($requestData, Book::class, 'json');
+
+        $errors = $validator->validate($updatedBook);
+        if (count($errors) > 0) {
+            return $this->json([
+                'message' => 'Validation failed', 'errors' => (string)$errors
+            ], Response::HTTP_BAD_REQUEST);
+        }
 
         $book->setTitle($updatedBook->getTitle());
         $book->setAuthor($updatedBook->getAuthor());

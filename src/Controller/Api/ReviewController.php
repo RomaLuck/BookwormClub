@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/api/reviews')]
 final class ReviewController extends AbstractController
@@ -29,19 +30,28 @@ final class ReviewController extends AbstractController
     }
 
     #[Route('/', name: 'app_review_new', methods: ['POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(
+        Request                $request,
+        EntityManagerInterface $entityManager,
+        SerializerInterface    $serializer,
+        ValidatorInterface     $validator
+    ): Response
     {
         $requestData = $request->toArray();
+        $review = $serializer->deserialize($request->getContent(), Review::class, 'json');
+
+        $errors = $validator->validate($review);
+        if (count($errors) > 0) {
+            return $this->json([
+                'message' => 'Validation failed', 'errors' => (string)$errors
+            ], Response::HTTP_BAD_REQUEST);
+        }
 
         $book = $entityManager->getRepository(Book::class)->find($requestData['book']);
         if (!$book) {
             return $this->json(['message' => 'Book not found!'], Response::HTTP_NOT_FOUND);
         }
 
-        $review = new Review();
-        $review->setBody($requestData['body']);
-        $review->setRating($requestData['rating']);
-        $review->setAuthor($requestData['author']);
         $review->setBook($book);
 
         $entityManager->persist($review);
@@ -58,10 +68,23 @@ final class ReviewController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_review_edit', methods: ['PUT'])]
-    public function edit(Request $request, Review $review, EntityManagerInterface $entityManager, SerializerInterface $serializer): Response
+    public function edit(
+        Request                $request,
+        Review                 $review,
+        EntityManagerInterface $entityManager,
+        SerializerInterface    $serializer,
+        ValidatorInterface     $validator
+    ): Response
     {
         $requestData = $request->getContent();
         $updatedReview = $serializer->deserialize($requestData, Review::class, 'json');
+
+        $errors = $validator->validate($updatedReview);
+        if (count($errors) > 0) {
+            return $this->json([
+                'message' => 'Validation failed', 'errors' => (string)$errors
+            ], Response::HTTP_BAD_REQUEST);
+        }
 
         $review->setBody($updatedReview->getBody());
         $review->setRating($updatedReview->getRating());
