@@ -2,12 +2,12 @@ import axios from "axios";
 
 class ReviewService {
     async showAll() {
-        const response = await axios.get("/api/reviews");
-        return response.data['member'];
+        const response = await axios.get("/api/reviews/");
+        return response.data;
     }
 
     async create(review) {
-        return await axios.post("/api/reviews", review, {
+        return await axios.post("/api/reviews/", review, {
             headers: {
                 "Content-Type": "application/ld+json"
             }

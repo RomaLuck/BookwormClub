@@ -2,13 +2,11 @@
 
 namespace App\Entity;
 
-use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ReviewRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReviewRepository::class)]
-#[ApiResource]
 class Review
 {
     #[ORM\Id]
@@ -28,7 +26,8 @@ class Review
     #[ORM\Column(type: Types::DATE_IMMUTABLE)]
     private ?\DateTimeImmutable $publicationDate = null;
 
-    #[ORM\ManyToOne(inversedBy: 'reviews')]
+    #[ORM\ManyToOne(targetEntity: Book::class, inversedBy: 'reviews')]
+    #[ORM\JoinColumn(nullable: false)]
     private ?Book $book = null;
 
     public function __construct()
@@ -106,5 +105,16 @@ class Review
         $this->book = $book;
 
         return $this;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getId(),
+            'rating' => $this->getRating(),
+            'body' => $this->getBody(),
+            'author' => $this->getAuthor(),
+            'publicationDate' => $this->getPublicationDate()->format('Y-m-d'),
+        ];
     }
 }
