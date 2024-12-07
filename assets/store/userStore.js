@@ -58,6 +58,7 @@ export const useUserStore = defineStore('user', {
     },
 
     getters: {
-        isAuthenticated: (state) => !!state.user
+        isAuthenticated: (state) => !!state.user,
+        isAdmin: (state) => state.user && state.user.roles.includes('ROLE_ADMIN')
     }
 });

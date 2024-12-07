@@ -3,9 +3,18 @@ import {computed} from "vue";
 import {useUserStore} from "../store/userStore";
 import LogoutButton from "./auth/LogoutButton.vue";
 
+const userStore = useUserStore();
+
 const isAuth = computed(() => {
-  const userStore = useUserStore();
   return userStore.isAuthenticated;
+});
+
+const isAdmin = computed(() => {
+  return userStore.isAdmin;
+});
+
+const toAdminPanel = computed(() => {
+  document.location.href = '/admin';
 });
 
 </script>
@@ -18,10 +27,15 @@ const isAuth = computed(() => {
       </router-link>
 
       <div class="d-flex">
-        <router-link v-if="isAuth" to="/books" class="btn btn-primary me-2">Books</router-link>
-        <LogoutButton v-if="isAuth"/>
-        <router-link v-if="!isAuth" to="/login" class="btn btn-outline-primary me-2">Login</router-link>
-        <router-link v-if="!isAuth" to="/register" class="btn btn-outline-success me-2">Register</router-link>
+        <div v-if="isAuth">
+          <a v-if="isAdmin" class="btn btn-primary me-2" @click="toAdminPanel">Admin panel</a>
+          <router-link to="/books" class="btn btn-primary me-2">Books</router-link>
+          <LogoutButton/>
+        </div>
+        <div v-else>
+          <router-link to="/login" class="btn btn-outline-primary me-2">Login</router-link>
+          <router-link to="/register" class="btn btn-outline-success me-2">Register</router-link>
+        </div>
       </div>
     </div>
   </nav>
