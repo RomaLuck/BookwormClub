@@ -6,6 +6,7 @@ import ReviewService from "../../services/review.service";
 import {useRoute} from "vue-router";
 import {useUserStore} from "../../store/userStore";
 import Alert from "../Alert.vue";
+import DOMPurify from 'dompurify';
 
 const book = reactive({title: '', author: '', description: ''});
 const bookReviews = reactive([]);
@@ -43,7 +44,7 @@ onMounted(async () => {
   const {title, author, description, reviews} = await BookService.show(bookId);
   book.title = title;
   book.author = author;
-  book.description = description;
+  book.description = DOMPurify.sanitize(description);
 
   bookReviews.push(...reviews);
 });
@@ -76,7 +77,7 @@ onMounted(async () => {
             <p class="card-text">{{ bookReview.body }}</p>
             <div class="d-flex justify-content-between align-items-center">
               <div class="rating">
-                <span v-for="star in 5" :key="star" :class="{'active': star <= bookReview.rating || 0}">
+                <span v-for="star in 5" :key="star" :class="{'active': star <= bookReview.rating}">
                   <i class="bi bi-star small-star"></i>
                 </span>
               </div>
