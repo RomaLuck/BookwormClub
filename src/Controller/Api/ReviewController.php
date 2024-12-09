@@ -34,10 +34,14 @@ final class ReviewController extends AbstractController
         Request                $request,
         EntityManagerInterface $entityManager,
         SerializerInterface    $serializer,
-        ValidatorInterface     $validator
+        ValidatorInterface     $validator,
     ): Response
     {
         $requestData = $request->toArray();
+        if (!$this->isCsrfTokenValid('review_form', $requestData['_csrf_token'])) {
+            return $this->json(['error' => 'Invalid CSRF token'], Response::HTTP_FORBIDDEN);
+        }
+
         $review = $serializer->deserialize($request->getContent(), Review::class, 'json');
 
         $errors = $validator->validate($review);
@@ -76,8 +80,12 @@ final class ReviewController extends AbstractController
         ValidatorInterface     $validator
     ): Response
     {
-        $requestData = $request->getContent();
-        $updatedReview = $serializer->deserialize($requestData, Review::class, 'json');
+        $requestData = $request->toArray();
+        if (!$this->isCsrfTokenValid('review_form', $requestData['_csrf_token'])) {
+            return $this->json(['error' => 'Invalid CSRF token'], Response::HTTP_FORBIDDEN);
+        }
+
+        $updatedReview = $serializer->deserialize($request->getContent(), Review::class, 'json');
 
         $errors = $validator->validate($updatedReview);
         if (count($errors) > 0) {

@@ -7,6 +7,7 @@ import {useRoute} from "vue-router";
 import {useUserStore} from "../../store/userStore";
 import Alert from "../Alert.vue";
 import DOMPurify from 'dompurify';
+import SecurityService from "../../services/security.service";
 
 const book = reactive({title: '', author: '', description: ''});
 const bookReviews = reactive([]);
@@ -15,6 +16,7 @@ const error = ref('');
 const route = useRoute();
 const bookId = Number(route.params.id);
 const userStore = useUserStore();
+let csrfToken = '';
 
 const addReview = async () => {
   if (!review.body) {
@@ -25,6 +27,7 @@ const addReview = async () => {
     author: userStore.user.username ?? '',
     rating: review.rating,
     book: bookId,
+    _csrf_token: csrfToken,
   };
   try {
     await ReviewService.create(newReview);
@@ -41,6 +44,8 @@ const rate = (star) => {
 }
 
 onMounted(async () => {
+  csrfToken = await SecurityService.getCsrfToken();
+
   const {title, author, description, reviews} = await BookService.show(bookId);
   book.title = title;
   book.author = author;
