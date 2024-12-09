@@ -87,7 +87,7 @@ onMounted(async () => {
                 </span>
               </div>
               <div class="small">{{
-                  new Date(bookReview.publicationDate).toLocaleString()
+                  bookReview.publicationDate ? new Date(bookReview.publicationDate).toLocaleDateString() : ''
                 }}
               </div>
             </div>
