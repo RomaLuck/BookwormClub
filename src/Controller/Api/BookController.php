@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -29,6 +30,7 @@ final class BookController extends AbstractController
     }
 
     #[Route('/', name: 'app_book_new', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function new(
         Request                $request,
         EntityManagerInterface $entityManager,
@@ -53,6 +55,7 @@ final class BookController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_book_show', methods: ['GET'])]
+    #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function show(Book $book, SerializerInterface $serializer): Response
     {
         $foundBook = $serializer->serialize($book, 'json', $this->contextProvider->getContext());
@@ -60,6 +63,7 @@ final class BookController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_book_edit', methods: ['PUT'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function edit(
         Request                $request,
         Book                   $book,
@@ -89,6 +93,7 @@ final class BookController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_book_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_ADMIN')]
     public function delete(Book $book, EntityManagerInterface $entityManager): Response
     {
         $entityManager->remove($book);

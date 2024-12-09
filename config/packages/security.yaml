@@ -27,6 +27,7 @@ security:
     api:
       pattern: ^/api
       stateless: true
+      provider: app_user_provider
       jwt: ~
 
 
@@ -43,7 +44,7 @@ security:
   # Note: Only the *first* access control that matches will be used
   access_control:
     - { path: ^/admin, roles: ROLE_ADMIN }
-#    - { path: ^/api, roles: IS_AUTHENTICATED_FULLY }
+    - { path: ^/api/reviews, roles: IS_AUTHENTICATED_FULLY }
     # - { path: ^/profile, roles: ROLE_USER }
 
 when@test:
