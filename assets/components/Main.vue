@@ -20,7 +20,7 @@ onMounted(() => {
   <layout-div>
     <div class="d-flex">
       <div class="card m-3" style="width: 18rem;" v-for="book in books" :key="book.id">
-        <img :src="`uploads/images/${book.image}`" class="card-img-top" alt="...">
+        <img v-if="book.image" :src="`uploads/images/${book.image}`" class="card-img-top" alt="...">
         <div class="card-body position-relative">
           <h5 class="card-title">{{ book.title }}</h5>
           <p class="card-text text-truncate" v-html="DOMPurify.sanitize(book.description)"></p>
