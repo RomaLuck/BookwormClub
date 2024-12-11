@@ -40,4 +40,13 @@ class BookRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findBooks(int $page, int $limit): array
+    {
+        $queryBuilder = $this->createQueryBuilder('i')
+            ->setFirstResult(($page - 1) * $limit)
+            ->setMaxResults($limit);
+
+        return $queryBuilder->getQuery()->getResult();
+    }
 }

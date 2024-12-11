@@ -1,16 +1,26 @@
 <script setup>
 import LayoutDiv from "../LayoutDiv.vue";
-import {onMounted, reactive} from "vue";
+import {onMounted, ref, watch} from "vue";
 import BookService from "../../services/book.service";
 import DOMPurify from "dompurify";
 
-const books = reactive([]);
+const books = ref([]);
+const page = ref(1);
+const pageNumTotal = ref(1);
 
 const fetchBooks = async () => {
-  books.push(...await BookService.showAll());
+  books.value = [];
+  const response = await BookService.showByPage(page.value);
+  books.value.push(...response.data);
+  page.value = response.currentPage;
+  pageNumTotal.value = response.pagesTotal;
 };
 
 onMounted(() => {
+  fetchBooks();
+});
+
+watch(page, () => {
   fetchBooks();
 });
 
@@ -39,6 +49,26 @@ onMounted(() => {
       </tr>
       </tbody>
     </table>
+    <nav aria-label="Page navigation example">
+      <ul class="pagination">
+        <li class="page-item" :class="{disabled:
+        page === 1}" @click="page > 1 ? page-- : null">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+        </li>
+        <li class="page-item" v-for="num in pageNumTotal" :key="num" :class="{active: num === page}"
+            @click="page = num">
+          <a class="page-link" href="#">{{ num }}</a>
+        </li>
+        <li class="page-item" :class="{disabled:
+        page === pageNumTotal}" @click="page < pageNumTotal ? page++ : null">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </layout-div>
 </template>
 

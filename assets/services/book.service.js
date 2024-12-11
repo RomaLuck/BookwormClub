@@ -1,8 +1,12 @@
 import axios from "axios";
 
 class BookService {
-    async showAll() {
-        const response = await axios.get("/api/books/");
+    async showByPage(page) {
+        const response = await axios.get("/api/books/",{
+            params: {
+                page: page
+            }
+        });
         return response.data;
     }
 

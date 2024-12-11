@@ -23,9 +23,18 @@ final class BookController extends AbstractController
     }
 
     #[Route('/', name: 'app_book_index', methods: ['GET'])]
-    public function index(BookRepository $bookRepository, SerializerInterface $serializer): Response
+    public function index(BookRepository $bookRepository, SerializerInterface $serializer, Request $request): Response
     {
-        $books = $serializer->serialize($bookRepository->findAll(), 'json', $this->contextProvider->getContext());
+        $page = $request->query->getInt('page', 1);
+        $limit = $request->query->getInt('limit', 2);
+        $pagesTotal = (int)ceil($bookRepository->count() / $limit);
+
+        $books = $serializer->serialize([
+            'data' => $bookRepository->findBooks($page, $limit),
+            'currentPage' => $page,
+            'pagesTotal' => $pagesTotal
+        ], 'json', $this->contextProvider->getContext());
+
         return new Response($books, Response::HTTP_OK, ['Content-Type' => 'application/json']);
     }
 
@@ -51,14 +60,16 @@ final class BookController extends AbstractController
         $entityManager->persist($book);
         $entityManager->flush();
 
-        return $this->json(['message' => 'Book created!', 'book' => $book->toArray()], Response::HTTP_CREATED);
+        return $this->json(['message' => 'Book created!', 'data' => $book->toArray()], Response::HTTP_CREATED);
     }
 
     #[Route('/{id}', name: 'app_book_show', methods: ['GET'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function show(Book $book, SerializerInterface $serializer): Response
     {
-        $foundBook = $serializer->serialize($book, 'json', $this->contextProvider->getContext());
+        $foundBook = $serializer->serialize([
+            'data' => $book
+        ], 'json', $this->contextProvider->getContext());
         return new Response($foundBook, Response::HTTP_OK, ['Content-Type' => 'application/json']);
     }
 
@@ -89,7 +100,7 @@ final class BookController extends AbstractController
 
         $entityManager->flush();
 
-        return $this->json(['message' => 'Book updated!', 'book' => $book->toArray()]);
+        return $this->json(['message' => 'Book updated!', 'data' => $book->toArray()]);
     }
 
     #[Route('/{id}', name: 'app_book_delete', methods: ['POST'])]
