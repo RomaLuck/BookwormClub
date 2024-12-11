@@ -1,6 +1,6 @@
 <script setup>
 import LayoutDiv from "../LayoutDiv.vue";
-import {onMounted, reactive, ref} from "vue";
+import {onMounted, onUnmounted, reactive, ref} from "vue";
 import BookService from "../../services/book.service";
 import ReviewService from "../../services/review.service";
 import {useRoute} from "vue-router";
@@ -10,12 +10,13 @@ import DOMPurify from 'dompurify';
 import SecurityService from "../../services/security.service";
 
 const book = reactive({title: '', author: '', description: ''});
-const bookReviews = reactive([]);
+const bookReviews = ref([]);
 const review = reactive({body: '', rating: 0});
 const error = ref('');
 const route = useRoute();
 const bookId = Number(route.params.id);
 const userStore = useUserStore();
+const isBottomReached = ref(false);
 let csrfToken = '';
 
 const addReview = async () => {
@@ -31,7 +32,7 @@ const addReview = async () => {
   };
   try {
     await ReviewService.create(newReview);
-    bookReviews.push(newReview);
+    bookReviews.value.push(newReview);
     review.body = '';
     review.rating = 0;
   } catch (e) {
@@ -43,15 +44,28 @@ const rate = (star) => {
   review.rating = star;
 }
 
+const handleScroll = () => {
+  if (!isBottomReached.value && window.innerHeight + window.scrollY >= document.body.offsetHeight - 10) {
+    isBottomReached.value = true;
+  }
+}
+
 onMounted(async () => {
   csrfToken = await SecurityService.getCsrfToken();
 
-  const {title, author, description, reviews} = await BookService.show(bookId);
+  const response = await BookService.show(bookId);
+  const {title, author, description, reviews} = response.data;
   book.title = title;
   book.author = author;
   book.description = DOMPurify.sanitize(description);
 
-  bookReviews.push(...reviews);
+  bookReviews.value.push(...reviews);
+
+  window.addEventListener('scroll', handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll);
 });
 
 </script>
@@ -73,10 +87,10 @@ onMounted(async () => {
         </div>
         <textarea class="form-control" name="review" id="review" cols="30" rows="3" placeholder="Add review"
                   v-model="review.body"></textarea>
-        <button class="btn btn-primary" @click="addReview">Send</button>
+        <button class="btn btn-primary my-2" @click="addReview">Send</button>
       </div>
-      <div class="col-md-3">
-        <div class="card" style="width: 18rem;" v-for="bookReview in bookReviews" :key="bookReview.id">
+      <div :class="{'col-md-3': !isBottomReached, 'col-md-12': isBottomReached}">
+        <div class="card mb-2" v-for="bookReview in bookReviews" :key="bookReview.id">
           <div class="card-body">
             <h5 class="card-title">{{ bookReview.author || 'Anonymous' }}</h5>
             <p class="card-text">{{ bookReview.body }}</p>
