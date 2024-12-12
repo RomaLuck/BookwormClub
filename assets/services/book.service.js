@@ -10,6 +10,11 @@ class BookService {
         return response.data;
     }
 
+    async getTopRatedBooks() {
+        const response = await axios.get("/api/books/top");
+        return response.data;
+    }
+
     async create(book) {
         await axios.post("/api/books/", book, {
             headers: {

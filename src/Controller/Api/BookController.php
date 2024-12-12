@@ -18,6 +18,10 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 final class BookController extends AbstractController
 {
 
+    private const TOP_RATED_BOOKS_NUM = 8;
+
+    private const PAGINATION_LIMIT = 8;
+
     public function __construct(private readonly SerializationContextProvider $contextProvider)
     {
     }
@@ -26,11 +30,11 @@ final class BookController extends AbstractController
     public function index(BookRepository $bookRepository, SerializerInterface $serializer, Request $request): Response
     {
         $page = $request->query->getInt('page', 1);
-        $limit = $request->query->getInt('limit', 2);
-        $pagesTotal = (int)ceil($bookRepository->count() / $limit);
+
+        $pagesTotal = (int)ceil($bookRepository->count() / self::PAGINATION_LIMIT);
 
         $books = $serializer->serialize([
-            'data' => $bookRepository->findBooks($page, $limit),
+            'data' => $bookRepository->findBooks($page, self::PAGINATION_LIMIT),
             'currentPage' => $page,
             'pagesTotal' => $pagesTotal
         ], 'json', $this->contextProvider->getContext());
@@ -63,6 +67,16 @@ final class BookController extends AbstractController
         return $this->json(['message' => 'Book created!', 'data' => $book->toArray()], Response::HTTP_CREATED);
     }
 
+    #[Route('/top', name: 'app_book_top', methods: ['GET'])]
+    public function top(BookRepository $bookRepository, SerializerInterface $serializer): Response
+    {
+        $books = $serializer->serialize([
+            'data' => $bookRepository->findBy([], ['rating' => 'DESC'], self::TOP_RATED_BOOKS_NUM)
+        ], 'json', $this->contextProvider->getContext());
+
+        return new Response($books, Response::HTTP_OK, ['Content-Type' => 'application/json']);
+    }
+
     #[Route('/{id}', name: 'app_book_show', methods: ['GET'])]
     #[IsGranted('IS_AUTHENTICATED_FULLY')]
     public function show(Book $book, SerializerInterface $serializer): Response
@@ -70,6 +84,7 @@ final class BookController extends AbstractController
         $foundBook = $serializer->serialize([
             'data' => $book
         ], 'json', $this->contextProvider->getContext());
+
         return new Response($foundBook, Response::HTTP_OK, ['Content-Type' => 'application/json']);
     }
 

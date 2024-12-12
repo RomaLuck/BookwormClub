@@ -7,7 +7,8 @@ import DOMPurify from "dompurify";
 const books = reactive([]);
 
 const fetchBooks = async () => {
-  books.push(...await BookService.showAll());
+  const response = await BookService.getTopRatedBooks();
+  books.push(...response.data);
 };
 
 onMounted(() => {
