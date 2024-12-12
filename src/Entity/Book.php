@@ -21,8 +21,8 @@ class Book
     #[Assert\Length(min: 3, max: 255)]
     private ?string $title = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\Length(min: 3, max: 1000)]
+    #[ORM\Column(type: Types::TEXT)]
+    #[Assert\Length(min: 3, max: 3000)]
     private ?string $description = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -47,7 +47,7 @@ class Book
     public function __construct()
     {
         $this->reviews = new ArrayCollection();
-        $this->setPublicationDate();
+        $this->setPublicationDate(new \DateTimeImmutable());
     }
 
 
@@ -104,9 +104,9 @@ class Book
         return $this->publicationDate;
     }
 
-    public function setPublicationDate(): static
+    public function setPublicationDate(\DateTimeImmutable $publicationDate): static
     {
-        $this->publicationDate = new \DateTimeImmutable();
+        $this->publicationDate = $publicationDate;
 
         return $this;
     }

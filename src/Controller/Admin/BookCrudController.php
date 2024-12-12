@@ -27,7 +27,7 @@ class BookCrudController extends AbstractCrudController
             ImageField::new('image')
                 ->setUploadDir('/public/uploads/images')
                 ->setBasePath('uploads/images')
-                ->setUploadedFileNamePattern('[year]/[month]/[day]/[slug]-[contenthash].[extension]')
+                ->setUploadedFileNamePattern('[contenthash].[extension]')
                 ->setRequired(false),
             DateField::new('publicationDate'),
         ];

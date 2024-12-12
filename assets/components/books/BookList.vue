@@ -16,6 +16,10 @@ const fetchBooks = async () => {
   pageNumTotal.value = response.pagesTotal;
 };
 
+const truncate = (text, length, clamp = '...') => {
+  return text.length > length ? text.slice(0, length) + clamp : text;
+}
+
 onMounted(() => {
   fetchBooks();
 });
@@ -42,7 +46,7 @@ watch(page, () => {
       <tr v-for="book in books" :key="book.id">
         <td>{{ book.title }}</td>
         <td>{{ book.author }}</td>
-        <td class="text-truncate" v-html="DOMPurify.sanitize(book.description)"></td>
+        <td v-html="truncate(DOMPurify.sanitize(book.description),100)"></td>
         <td class="d-flex justify-content-end">
           <router-link :to="`/books/${book.id}`" class="btn btn-outline-info">Show</router-link>
         </td>
