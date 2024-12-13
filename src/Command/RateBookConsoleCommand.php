@@ -14,7 +14,6 @@ use Symfony\Component\Scheduler\Attribute\AsCronTask;
 #[AsCommand(
     name: 'RateBookConsoleCommand',
     description: 'Rate the books',
-    aliases: ['app:rate-book']
 )]
 #[AsCronTask('00 20 * * *')]
 class RateBookConsoleCommand extends Command
