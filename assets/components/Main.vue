@@ -29,8 +29,20 @@ onMounted(() => {
         <div class="card-body position-relative">
           <h5 class="card-title">{{ book.title }}</h5>
           <p class="card-text" v-html="truncate(DOMPurify.sanitize(book.description),100)"></p>
-          <router-link :to="`/books/${book.id}`" class="btn btn-primary">Show</router-link>
-          <i class="bi bi-heart position-absolute bottom-0 end-0 m-2"></i>
+          <div class="row position-absolute bottom-0 w-100">
+            <div class="col-md-6 align-content-center">
+              <router-link :to="`/books/${book.id}`" class="btn btn-primary">Show</router-link>
+            </div>
+            <div class="col-md-6">
+              <div class="d-flex justify-content-end">
+                <div class="rating">
+                  <span v-for="star in 5" :key="star" :class="{'active': star <= book.rating}">
+                    <i class="bi bi-star small-star"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -38,5 +50,17 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.rating span {
+  cursor: pointer;
+  font-size: 2rem;
+  color: #ccc;
+}
 
+.rating span.active {
+  color: gold;
+}
+
+.small-star {
+  font-size: 1.2rem;
+}
 </style>

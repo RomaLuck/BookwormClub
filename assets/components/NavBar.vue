@@ -20,10 +20,10 @@ const toAdminPanel = computed(() => {
 </script>
 
 <template>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-md">
       <router-link class="navbar-brand" to="/">
-        <i class="bi bi-houses">Home</i>
+        bookworm-club.com
       </router-link>
 
       <div class="d-flex">
