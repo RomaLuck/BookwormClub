@@ -15,6 +15,12 @@ class RegistrationControllerTest extends WebTestCase
     protected function setUp(): void
     {
         $this->client = static::createClient();
+        $this->client->setServerParameters([
+            'HTTP_ACCEPT' => 'application/json',
+            'CONTENT_TYPE' => 'application/json',
+            'host' => 'localhost',
+            'port' => 8000
+        ]);
 
         // Ensure we have a clean database
         $container = static::getContainer();
@@ -32,19 +38,15 @@ class RegistrationControllerTest extends WebTestCase
 
     public function testRegister(): void
     {
-        // Register a new user
-        $this->client->request('GET', '/register');
-        self::assertResponseIsSuccessful();
-        self::assertPageTitleContains('Register');
+        $this->client->request('POST', '/api/register', content: json_encode([
+            'email' => 'email@example.com',
+            'username' => 'username',
+            'password' => 'password'
+        ]));
 
-        $this->client->submitForm('Register', [
-            'registration_form[email]' => 'me@example.com',
-            'registration_form[plainPassword]' => 'password',
-            'registration_form[agreeTerms]' => true,
-        ]);
-
-        // Ensure the response redirects after submitting the form, the user exists, and is not verified
-        self::assertResponseRedirects('/');
-        self::assertCount(1, $this->userRepository->findAll());
+        $response = $this->client->getResponse();
+        $this->assertSame(201, $response->getStatusCode());
+        $this->assertJson($response->getContent());
+        $this->assertStringContainsString('User created!', $response->getContent());
     }
 }
