@@ -1,16 +1,13 @@
 <?php
 
-namespace App\Tests;
+namespace App\Tests\Controller;
 
-use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\KernelBrowser;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class RegistrationControllerTest extends WebTestCase
 {
     private KernelBrowser $client;
-    private UserRepository $userRepository;
 
     protected function setUp(): void
     {
@@ -21,19 +18,6 @@ class RegistrationControllerTest extends WebTestCase
             'host' => 'localhost',
             'port' => 8000
         ]);
-
-        // Ensure we have a clean database
-        $container = static::getContainer();
-
-        /** @var EntityManager $em */
-        $em = $container->get('doctrine')->getManager();
-        $this->userRepository = $container->get(UserRepository::class);
-
-        foreach ($this->userRepository->findAll() as $user) {
-            $em->remove($user);
-        }
-
-        $em->flush();
     }
 
     public function testRegister(): void

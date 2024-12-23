@@ -30,6 +30,14 @@ final class BookController extends AbstractController
     public function index(BookRepository $bookRepository, SerializerInterface $serializer, Request $request): Response
     {
         $page = $request->query->getInt('page', 1);
+        $searchText = $request->query->get('search');
+        if ($searchText) {
+            $books = $serializer->serialize([
+                'data' => $bookRepository->search($searchText)
+            ], 'json', $this->contextProvider->getContext());
+
+            return new Response($books, Response::HTTP_OK, ['Content-Type' => 'application/json']);
+        }
 
         $pagesTotal = (int)ceil($bookRepository->count() / self::PAGINATION_LIMIT);
 

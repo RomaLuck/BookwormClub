@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Book;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\DBAL\Exception;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -48,5 +49,22 @@ class BookRepository extends ServiceEntityRepository
             ->setMaxResults($limit);
 
         return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
+     * @throws Exception
+     */
+    public function search(string $searchText): array
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT * FROM book b
+            WHERE b.search_vector @@ plainto_tsquery(:searchText)
+            ';
+
+        $resultSet = $conn->executeQuery($sql, ['searchText' => $searchText]);
+
+        return $resultSet->fetchAllAssociative();
     }
 }

@@ -7,6 +7,7 @@ import DOMPurify from "dompurify";
 const books = ref([]);
 const page = ref(1);
 const pageNumTotal = ref(1);
+const searchQuery = ref('');
 
 const fetchBooks = async () => {
   books.value = [];
@@ -20,11 +21,18 @@ const truncate = (text, length, clamp = '...') => {
   return text.length > length ? text.slice(0, length) + clamp : text;
 }
 
+const search = async () => {
+  books.value = [];
+  const response = await BookService.search(searchQuery.value);
+  books.value.push(...response.data);
+};
+
 onMounted(() => {
   fetchBooks();
 });
 
 watch(page, () => {
+  console.log('page changed: ' + page.value);
   fetchBooks();
 });
 
@@ -33,6 +41,11 @@ watch(page, () => {
 <template>
   <layout-div>
     <h1>Book List</h1>
+    <form class="form-inline d-flex">
+      <input class="form-control" type="search" placeholder="Search" aria-label="Search" v-model="searchQuery">
+      <button class="btn btn-outline-success" @click.prevent="search">Search</button>
+      <button class="btn btn-outline-primary" @click.prevent="fetchBooks">Reset</button>
+    </form>
     <table class="table table-striped">
       <thead>
       <tr>

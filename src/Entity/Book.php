@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\DBAL\TSVectorType;
 use App\Repository\BookRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -9,7 +10,9 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+#[ORM\Index(columns: ['search_vector'], flags: ['gin'])]
 #[ORM\Entity(repositoryClass: BookRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 class Book
 {
     #[ORM\Id]
@@ -43,6 +46,9 @@ class Book
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $image = null;
+
+    #[ORM\Column(type: TSVectorType::TSVECTOR, nullable: true)]
+    private ?string $searchVector = null;
 
     public function __construct()
     {
@@ -176,5 +182,28 @@ class Book
             'rating' => $this->rating,
             'image' => $this->image,
         ];
+    }
+
+    public function getSearchVector(): ?string
+    {
+        return $this->searchVector;
+    }
+
+
+    public function setSearchVector(?string $searchVector): static
+    {
+        $this->searchVector = $searchVector;
+
+        return $this;
+    }
+
+    #[ORM\PrePersist]
+    #[ORM\PreUpdate]
+    public function updateSearchVector(): void
+    {
+        $this->searchVector = sprintf(
+            "to_tsvector(%s)",
+            $this->author . ' ' . $this->title . ' ' . $this->description
+        );
     }
 }
